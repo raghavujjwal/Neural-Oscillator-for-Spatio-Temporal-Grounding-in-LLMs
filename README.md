@@ -1,9 +1,11 @@
 Neural Oscillator for Spatio-Temporal Grounding in LLMs.
 
 This project implements a Stateful Transformer Architecture by integrating a continuous 2D Neural Oscillator into a GPT-2 model. The goal is to move beyond the stateless nature of traditional LLMs, enabling the model to "feel" and report the passage of real-world time between user interactions.
+
 Architectural Overview: The Neural Oscillator
 
 Traditional LLMs treat every prompt as an isolated event. My architecture introduces a Neural Oscillator that:Encodes Time Geometrically: Transforms physical time into $(\cos, \sin)$ vectors to provide a bounded, continuous signal to the model.Stateful Injection: Injects this temporal signal into the residual stream of the first token in the transformer's sequence, effectively adding a temporal dimension to the model's spatial positional encoding.Instruction-Triggered Logic: Uses a custom [TIME_SENSE] trigger token to teach the model's self-attention mechanism when to prioritize temporal data over pre-trained general knowledge.
+
 Mechanistic Interpretability & Probing
 
 A core component of this research is the use of Linear Probing to verify signal fidelity within the model's latent representations.Key Finding: Latent Signal Fidelity vs. Linguistic ResolutionWhile the model's final text output may exhibit inaccuracies (e.g., saying "4 hours" for a 5-minute interval), our probing analysis demonstrates that the internal hidden states track time with high precision.Analysis of the Probe Graph:Periodicity-Induced Aliasing: The visualization identifies a clear "V-dip" and plateau effect. This is a mathematical result of the oscillator's $2\pi$ wrap-around every ~10 minutes, where different timestamps produce identical vector representations.Causal Disentanglement: Probing confirms that the model successfully disentangles "General Knowledge" from "Temporal State," activating the temporal circuit only when the trigger token is present.
